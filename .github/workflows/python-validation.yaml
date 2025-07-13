@@ -4,11 +4,12 @@
 name: Python application
 env:
   default-branch: main
-on:
-  push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+on: [push]  
+# on:
+#   push:
+#     branches: [ $default-branch ]
+#   pull_request:
+#     branches: [ $default-branch ]
 
 permissions:
   contents: read
