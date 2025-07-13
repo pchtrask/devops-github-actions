@@ -1,5 +1,5 @@
 from unittest import TestCase
-from app import multiply
+from ..app import multiply
 class TestMultiply(TestCase):
     def test_multiply_integers(self):
         self.assertEqual(multiply(2, 3), 6)
