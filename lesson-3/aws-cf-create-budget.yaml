@@ -1,0 +1,91 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  Trask SW:AWS - Well-Architected AWS Account  - https://gitlab.trask.cz/sw/aws-well-architected-toolbox
+  This deck deploys initial account configuration (common parameters).
+  https://aws.amazon.com/organizations/getting-started/best-practices/
+  https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/advanced-organization.html
+
+Parameters:
+  AccountName:
+    Type: String
+    Description: no spaces, only alphanumerics and dashes, unique account identifier
+  BudgetLimit: 
+    Type: Number
+    Default: 100  
+  TimeUnit:
+    Type: String
+    Default: MONTHLY
+    AllowedValues:
+      - MONTHLY
+      - QUARTERLY
+      - ANNUALLY
+  BudgetType:
+    Type: String
+    Default: COST
+    AllowedValues:
+      - COST
+      - USAGE
+      - RI_UTILIZATION
+      - RI_COVERAGE
+      - SAVINGS_PLANS_UTILIZATION
+      - SAVINGS_PLANS_COVERAGE
+Resources:
+  Budget:
+    Type: "AWS::Budgets::Budget"
+    Properties:
+      Budget:
+        BudgetName: !Sub "Budget-${AccountName}-${TimeUnit}-${BudgetType}"
+#        BudgetDescription: !Sub "Budget for ${AccountName}"
+        CostFilters:
+          LinkedAccount: 
+            - !Ref AWS::AccountId
+          # AZ:
+          #   - us-east-1
+          #   - us-west-1
+          #   - us-east-2
+        CostTypes:
+          IncludeCredit: true
+          IncludeDiscount: true
+          IncludeOtherSubscription: true
+          IncludeRecurring: true
+          IncludeRefund: true
+          IncludeSubscription: true
+          IncludeSupport: true
+          IncludeTax: true
+          IncludeUpfront: true
+          UseAmortized: false
+          UseBlended: false
+        # The following parameters are optional.
+        # The default values are provided.
+        # If you don't specify a value, the default value is used.
+        # The default value is provided by the AWS SDK.
+        # If you don't specify a value, the default value is used.
+        # The default value is provided by the AWS SDK.
+        # If you don't specify a value, the default value is used.
+        BudgetLimit:
+          Amount: !Ref BudgetLimit
+          Unit: USD
+        TimeUnit: !Ref TimeUnit
+        # TimePeriod:
+        #   Start: 1225864800
+        #   End: 1926864800
+        BudgetType: !Ref BudgetType
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 99
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Sub "awsome+${AccountName}@thetrask.com"
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+          Subscribers:
+          - SubscriptionType: EMAIL
+            Address: !Sub "awsome+${AccountName}@thetrask.com"
+Outputs:
+  BudgetId:
+    Value: !Ref Budget
