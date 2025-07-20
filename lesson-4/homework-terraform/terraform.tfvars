@@ -1,0 +1,7 @@
+aws_region     = "eu-central-1"
+instance_type   = "t2.micro"
+name_prefix     = "terraform-homework"
+environment     = "dev"
+course_name     = "DevOps-Terraform"
+key_name        = "terraform-ec2-key"
+public_key_path = "~/.ssh/id_rsa.pub"
