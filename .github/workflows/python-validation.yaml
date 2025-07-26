@@ -47,8 +47,8 @@ jobs:
     runs-on: ubuntu-latest
 
     # run terraform in lesson-4/live-demo directory
-    defaults:
-      run: cd lesson-4/live-demo
+    # defaults:
+    #   run: cd lesson-4/live-demo
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -57,15 +57,18 @@ jobs:
       with: 
         terraform_version: "1.11.1"
     - run: terraform init
+      working-directory: lesson-4/live-demo
 
     - id: plan
       run: terraform plan -no-color
+      working-directory: lesson-4/live-demo
 
     - run: echo ${{ steps.plan.outputs.stdout }}
     - run: echo ${{ steps.plan.outputs.stderr }}
     - run: echo ${{ steps.plan.outputs.exitcode }}   
     
     - id: apply
+      working-directory: lesson-4/live-demo
       run: terraform apply -auto-approve -no-color
     - run: echo ${{ steps.apply.outputs.stdout }}
   # validate:
