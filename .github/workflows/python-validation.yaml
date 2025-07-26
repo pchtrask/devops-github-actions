@@ -4,6 +4,8 @@
 name: Python application
 env:
   default-branch: main
+  python-version: "3.10"
+  lesson: "lesson4"
 on: [push]
 # on:
 #   push:
@@ -15,16 +17,16 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  "lesson2":
+    if: lesson == 'lesson2'
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.10
+    - name: Set up Python ${python-version}
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"
+        python-version: "${python-version}"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -40,7 +42,32 @@ jobs:
       run: |
         pytest
 
+  "lesson4":
+    if: lesson == 'lesson4'
+    runs-on: ubuntu-latest
 
+    # run terraform in lesson-4/live-demo directory
+    defaults:
+      run: cd lesson-4/live-demo
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - uses: hashicorp/setup-terraform@v3
+      with: 
+        terraform_version: "1.11.1"
+    - run: terraform init
+
+    - id: plan
+      run: terraform plan -no-color
+
+    - run: echo ${{ steps.plan.outputs.stdout }}
+    - run: echo ${{ steps.plan.outputs.stderr }}
+    - run: echo ${{ steps.plan.outputs.exitcode }}   
+    
+    - id: apply
+      run: terraform apply -auto-approve -no-color
+    - run: echo ${{ steps.apply.outputs.stdout }}
   # validate:
   #   runs-on: ubuntu-latest
 
