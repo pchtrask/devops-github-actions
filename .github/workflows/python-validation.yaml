@@ -17,8 +17,9 @@ permissions:
   contents: read
 
 jobs:
+
   "lesson2":
-    if: $LESSON == 'lesson2'
+    if: ${{ env.LESSON == 'lesson2' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -43,7 +44,7 @@ jobs:
         pytest
 
   "lesson4":
-    if: $LESSON == 'lesson4'
+    if: ${{ env.LESSON == 'lesson4' }}
     runs-on: ubuntu-latest
 
     # run terraform in lesson-4/live-demo directory
