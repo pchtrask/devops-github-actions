@@ -3,6 +3,17 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+terraform {
+  required_version = ">= 1.11.1"
+  backend "s3" {
+    bucket  = "tfstate-739133790707-eu-central-1"
+    key     = "devops-github-actions/lesson-4/live-demo/terraform.tfstate"
+    region  = "eu-central-1"
+    encrypt = true
+  }
+
+}
+
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
