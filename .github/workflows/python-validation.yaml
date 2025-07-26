@@ -27,7 +27,7 @@ jobs:
     - name: Set up Python ${env.python-version}
       uses: actions/setup-python@v3
       with:
-        python-version: "${env.python-version}"
+        python-version: ${env.python-version}
     - name: Install dependencies
       if: ${{ env.LESSON == 'lesson2' }}
 
