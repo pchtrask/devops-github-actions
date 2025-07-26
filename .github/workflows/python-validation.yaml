@@ -62,26 +62,39 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1
 
-
-    - uses: hashicorp/setup-terraform@v3
+    - name: Terraform plan and apply
+      env:
+        TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        TF_VAR_aws_region: eu-central-1
+        TF_IN_AUTOMATION: true
+        TF_INPUT: false
+        TF_WORKSPACE: dev
+      run: |
+        terraform init
+        terraform plan -no-color
+        terraform apply -auto-approve -no-color
+        
+      uses: hashicorp/setup-terraform@v3
       with: 
         terraform_version: "1.11.1"
-    - run: terraform init
-      working-directory: lesson-4/live-demo
+    # - run: terraform init
+    #   working-directory: lesson-4/live-demo
 
-    - id: plan
-      run: terraform plan -no-color
-      working-directory: lesson-4/live-demo
+    # - id: plan
+    #   run: terraform plan -no-color
+    #   working-directory: lesson-4/live-demo
 
-    - run: echo ${{ steps.plan.outputs.stdout }}
-    - run: echo ${{ steps.plan.outputs.stderr }}
-    - run: echo ${{ steps.plan.outputs.exitcode }}   
+    # - run: echo ${{ steps.plan.outputs.stdout }}
+    # - run: echo ${{ steps.plan.outputs.stderr }}
+    # - run: echo ${{ steps.plan.outputs.exitcode }}   
     
-    - id: apply
-      if: ${{ env.LESSON == 'lesson4' }}
-      working-directory: lesson-4/live-demo
-      run: terraform apply -auto-approve -no-color
-    - run: echo ${{ steps.apply.outputs.stdout }}
+    # - id: apply
+ 
+    #   if: ${{ env.LESSON == 'lesson4' }}
+    #   working-directory: lesson-4/live-demo
+    #   run: terraform apply -auto-approve -no-color
+    # - run: echo ${{ steps.apply.outputs.stdout }}
   # validate:
   #   runs-on: ubuntu-latest
 
