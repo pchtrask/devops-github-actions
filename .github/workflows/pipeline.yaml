@@ -118,6 +118,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: lesson-5
+        tags: demoapp:latest
 
     # - run: terraform init
     #   working-directory: lesson-4/live-demo
