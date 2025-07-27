@@ -20,7 +20,7 @@ permissions:
 jobs:
 
   "lesson2":
-    if: ${{ env.LESSON == 'lesson2' }}
+    if: $LESSON == 'lesson2'
 
     runs-on: ubuntu-latest
 
