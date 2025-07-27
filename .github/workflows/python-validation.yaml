@@ -7,7 +7,25 @@ env:
   python-version: "3.10"
   LESSON: "lesson4"
 
-on: [push]
+on: 
+#  - push
+  workflow_dispatch:
+    inputs:
+      lesson:
+        description: 'Select the lesson to run'
+        required: true
+        default: 'lesson2'
+        type: choice
+        options:
+          - lesson2
+          - lesson4
+# inputs:
+#     name:
+#       type: choice
+#       description: Who to greet
+#       options: 
+#       - monalisa
+#       - cschleiden
 # on:
 #   push:
 #     branches: [ $default-branch ]
@@ -20,7 +38,7 @@ permissions:
 jobs:
 
   "lesson2":
-    if: $LESSON == 'lesson2'
+    if: ${{ github.event.inputs.lesson == 'lesson2' }}
 
     runs-on: ubuntu-latest
 
