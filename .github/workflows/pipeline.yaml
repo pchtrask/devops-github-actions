@@ -119,6 +119,9 @@ jobs:
       with:
         context: lesson-5
         tags: demoapp:latest
+    - name: Run Docker container test
+      run: |
+        docker run --rm --name demoapp  demoapp:latest python python -m unittest discover -s demoapp/tests
 
     # - run: terraform init
     #   working-directory: lesson-4/live-demo
