@@ -48,7 +48,8 @@ jobs:
         pytest
 
   "lesson4":
-    if: ${{ env.LESSON == 'lesson4' }}
+    if: $LESSON == 'lesson4'
+
     runs-on: ubuntu-latest
     environment: dev
     # run terraform in lesson-4/live-demo directory
