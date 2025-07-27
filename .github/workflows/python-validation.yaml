@@ -8,17 +8,17 @@ env:
   LESSON: "lesson4"
 
 on: 
-#  - push
+  push:
   workflow_dispatch:
-    inputs:
-      lesson:
-        description: 'Select the lesson to run'
-        required: true
-        default: 'lesson2'
-        type: choice
-        options:
-          - lesson2
-          - lesson4
+      inputs:
+        lesson:
+          description: 'Select the lesson to run'
+          required: true
+          default: 'lesson2'
+          type: choice
+          options:
+            - lesson2
+            - lesson4
 # inputs:
 #     name:
 #       type: choice
