@@ -66,7 +66,7 @@ jobs:
         pytest
 
   "lesson4":
-    if: $LESSON == 'lesson4'
+    if: ${{ github.event.inputs.lesson == 'lesson4' }}
 
     runs-on: ubuntu-latest
     environment: dev
