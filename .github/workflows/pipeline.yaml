@@ -147,6 +147,8 @@ jobs:
         TF_IN_AUTOMATION: true
         TF_INPUT: false
         TF_CLI_ARGS_plan: -target=aws_ecr_repository.mynginx
+        TF_CLI_ARGS_apply: -target=aws_ecr_repository.mynginx
+
         TF_WORKSPACE: dev
       run: |
         terraform init
