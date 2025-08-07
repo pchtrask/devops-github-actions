@@ -2,6 +2,11 @@ resource "aws_ecs_cluster" "lesson8" {
   name = "lesson8"
 }
 
+resource "aws_cloudwatch_log_group" "lesson8" {
+  name              = "/ecs/lesson8"
+  retention_in_days = 7
+}
+
 resource "aws_ecs_task_definition" "lesson8" {
   family                   = "lesson8"
   network_mode             = "awsvpc"
@@ -22,6 +27,14 @@ resource "aws_ecs_task_definition" "lesson8" {
           protocol      = "tcp"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.lesson8.name
+          "awslogs-region"        = "eu-central-1"
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
     }
   ])
 }
