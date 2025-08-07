@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "ecs_role_policy" {
 
 resource "aws_iam_policy" "ecs_policy" {
   name        = "ecs_policy"
-  description = "Policy for ECS tasks to access ECR and CloudWatch Logs"
+  description = "Policy for ECS tasks to access ECR and CloudWatch Logs."
 
   policy = jsonencode({
     Version = "2012-10-17"
