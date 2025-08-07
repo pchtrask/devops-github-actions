@@ -27,3 +27,29 @@ resource "aws_iam_role_policy_attachment" "ecs_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+
+resource "aws_iam_policy" "ecs_policy" {
+  name        = "ecs_policy"
+  description = "Policy for ECS tasks to access ECR and CloudWatch Logs"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability", "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage"]
+        Resource = "*"
+      },
+      {
+        Effect   = "Allow"
+        Action   = ["logs:*"]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_policy_attachment" {
+  role       = aws_iam_role.ecs_role.name
+  policy_arn = aws_iam_policy.ecs_policy.arn
+}
