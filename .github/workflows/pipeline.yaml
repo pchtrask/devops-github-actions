@@ -183,7 +183,7 @@ jobs:
         TF_WORKSPACE: dev
       run: |
         terraform init
-        terraform plan -no-color -output=tfplan
+        terraform plan -no-color -out=tfplan
         terraform apply -auto-approve -no-color tfplan     
         
     # - name: Run Docker container test
