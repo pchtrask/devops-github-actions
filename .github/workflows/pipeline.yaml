@@ -163,8 +163,10 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
+        push: true
         context: lesson-8/docker/
         tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:latest
+
     - name: Terraform deploy
       working-directory: lesson-8/terraform/
       env:
