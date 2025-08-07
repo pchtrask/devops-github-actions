@@ -152,8 +152,8 @@ jobs:
         TF_WORKSPACE: dev
       run: |
         terraform init
-        terraform plan -no-color
-        terraform apply -auto-approve -no-color        
+        terraform plan -no-color -target=aws_ecr_repository.mynginx -output=tfplan
+        terraform apply -auto-approve -no-color tfplan 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     - name: Login to ECR
@@ -183,8 +183,8 @@ jobs:
         TF_WORKSPACE: dev
       run: |
         terraform init
-        terraform plan -no-color
-        terraform apply -auto-approve -no-color        
+        terraform plan -no-color -output=tfplan
+        terraform apply -auto-approve -no-color tfplan     
         
     # - name: Run Docker container test
     #   run: |
