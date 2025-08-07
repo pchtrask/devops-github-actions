@@ -11,13 +11,19 @@ resource "aws_iam_role" "ecs_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ecs.amazonaws.com"
+          Service = "ecs-tasks.amazonaws.com"
         }
       },
     ]
   })
 
   tags = {
-    tag-key = "tag-value"
+    Owner = "petrch"
   }
 }
+
+resource "aws_iam_role_policy_attachment" "ecs_role_policy" {
+  role       = aws_iam_role.ecs_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
