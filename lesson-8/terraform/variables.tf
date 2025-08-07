@@ -7,3 +7,10 @@ variable "aws_region" {
 variable "project_name" {
   default = "ecs-nginx-demo"
 }
+
+
+variable "aws_account_id" {
+  description = "AWS Account ID"
+  type        = string
+  default     = "739133790707"
+}
