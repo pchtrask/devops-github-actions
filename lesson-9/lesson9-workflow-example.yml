@@ -1,0 +1,95 @@
+# Example GitHub Actions workflow for Lesson 9
+# This is a standalone example showing how to implement JMeter performance testing
+
+name: Lesson 9 - Performance Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_url:
+        description: 'URL to test'
+        required: true
+        default: 'https://httpbin.org/get'
+        type: string
+      duration:
+        description: 'Test duration in seconds'
+        required: true
+        default: '60'
+        type: string
+      threads:
+        description: 'Number of virtual users'
+        required: true
+        default: '5'
+        type: string
+
+jobs:
+  performance-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        
+    - name: Download and Setup JMeter
+      run: |
+        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+        tar -xzf apache-jmeter-5.6.3.tgz
+        sudo mv apache-jmeter-5.6.3 /opt/jmeter
+        sudo ln -s /opt/jmeter/bin/jmeter /usr/local/bin/jmeter
+        
+    - name: Verify JMeter Installation
+      run: |
+        jmeter --version
+        
+    - name: Run JMeter Performance Test
+      run: |
+        cd lesson-9
+        mkdir -p results reports
+        jmeter -n \
+          -t performance-test.jmx \
+          -l results/results.jtl \
+          -e \
+          -o reports/ \
+          -Jtest.url="${{ github.event.inputs.test_url }}" \
+          -Jtest.duration="${{ github.event.inputs.duration }}" \
+          -Jtest.threads="${{ github.event.inputs.threads }}"
+        
+    - name: Display Test Summary
+      run: |
+        cd lesson-9
+        echo "## Performance Test Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- **Target URL**: ${{ github.event.inputs.test_url }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Duration**: ${{ github.event.inputs.duration }} seconds" >> $GITHUB_STEP_SUMMARY
+        echo "- **Virtual Users**: ${{ github.event.inputs.threads }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Test Completed**: $(date)" >> $GITHUB_STEP_SUMMARY
+        
+        # Extract basic statistics from results
+        if [ -f results/results.jtl ]; then
+          TOTAL_SAMPLES=$(tail -n +2 results/results.jtl | wc -l)
+          echo "- **Total Requests**: $TOTAL_SAMPLES" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+    - name: Upload JMeter Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: jmeter-performance-results
+        path: |
+          lesson-9/results/
+          lesson-9/reports/
+        retention-days: 30
+        
+    - name: Upload JMeter Logs
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: jmeter-logs
+        path: |
+          /opt/jmeter/bin/jmeter.log
+        retention-days: 7

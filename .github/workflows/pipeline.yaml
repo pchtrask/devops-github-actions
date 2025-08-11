@@ -21,6 +21,7 @@ on:
             - lesson4
             - lesson5
             - lesson8
+            - lesson9
 # inputs:
 #     name:
 #       type: choice
@@ -140,14 +141,13 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ vars.AWS_REGION }}
+        TF_VAR_aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
 
         TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         TF_VAR_aws_region: ${{ vars.AWS_REGION }}
         TF_IN_AUTOMATION: true
         TF_INPUT: false
-        TF_CLI_ARGS_plan: -target=aws_ecr_repository.mynginx
-        TF_CLI_ARGS_apply: -target=aws_ecr_repository.mynginx
 
         TF_WORKSPACE: dev
       run: |
@@ -167,7 +167,7 @@ jobs:
       with:
         push: true
         context: lesson-8/docker/
-        tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:latest
+        tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:{{ git.tag }}
 
     - name: Terraform deploy
       working-directory: lesson-8/terraform/
@@ -177,6 +177,7 @@ jobs:
         AWS_REGION: ${{ vars.AWS_REGION }}      
         TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        TF_VAR_aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
         TF_VAR_aws_region: ${{ vars.AWS_REGION }}
         TF_IN_AUTOMATION: true
         TF_INPUT: false
@@ -184,7 +185,45 @@ jobs:
       run: |
         terraform init
         terraform plan -no-color -out=tfplan
-        terraform apply -auto-approve -no-color tfplan     
+        terraform apply -auto-approve -no-color tfplan
+        
+  "lesson9":
+    if: ${{ github.event.inputs.lesson == 'lesson9' }}
+
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        
+    - name: Download and Setup JMeter
+      run: |
+        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+        tar -xzf apache-jmeter-5.6.3.tgz
+        sudo mv apache-jmeter-5.6.3 /opt/jmeter
+        sudo ln -s /opt/jmeter/bin/jmeter /usr/local/bin/jmeter
+        
+    - name: Run JMeter Performance Test
+      env:
+        TEST_URL: ${{ vars.TEST_URL || 'https://httpbin.org/get' }}
+      run: |
+        cd lesson-9
+        jmeter -n -t performance-test.jmx -l results.jtl -e -o reports/ -Jtest.url=$TEST_URL
+        
+    - name: Upload JMeter Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: jmeter-results
+        path: |
+          lesson-9/results.jtl
+          lesson-9/reports/
         
     # - name: Run Docker container test
     #   run: |

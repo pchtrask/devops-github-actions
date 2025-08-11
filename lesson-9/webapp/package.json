@@ -1,0 +1,39 @@
+{
+  "name": "devops-demo-api",
+  "version": "1.0.0",
+  "description": "Simple Node.js API for DevOps testing demonstrations",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:functional": "jest --testPathPattern=functional",
+    "test:unit": "jest --testPathPattern=unit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "api",
+    "devops",
+    "testing",
+    "docker"
+  ],
+  "author": "DevOps Course",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "nodemon": "^3.0.1",
+    "eslint": "^8.50.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

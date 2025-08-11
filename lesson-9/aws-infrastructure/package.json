@@ -1,0 +1,33 @@
+{
+  "name": "aws-infrastructure-tests",
+  "version": "1.0.0",
+  "description": "Deep and shallow tests for AWS infrastructure validation",
+  "main": "shallow-tests.js",
+  "scripts": {
+    "test:shallow": "node shallow-tests.js",
+    "test:deep": "node deep-tests.js",
+    "test:all": "npm run test:shallow && npm run test:deep",
+    "test:shallow:prod": "node shallow-tests.js us-east-1 devops-demo-api",
+    "test:deep:prod": "node deep-tests.js us-east-1 devops-demo-api"
+  },
+  "keywords": [
+    "aws",
+    "infrastructure",
+    "testing",
+    "devops",
+    "ecs",
+    "alb",
+    "terraform"
+  ],
+  "author": "DevOps Course",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-ecs": "^3.400.0",
+    "@aws-sdk/client-elastic-load-balancing-v2": "^3.400.0",
+    "@aws-sdk/client-ec2": "^3.400.0",
+    "@aws-sdk/client-cloudwatch-logs": "^3.400.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
