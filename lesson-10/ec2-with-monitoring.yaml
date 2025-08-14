@@ -1,0 +1,289 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'EC2 instance with CloudWatch Agent and SSM Agent pre-configured'
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
+    Description: EC2 instance type
+
+  KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 KeyPair to enable SSH access
+    ConstraintDescription: Must be the name of an existing EC2 KeyPair
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC ID where the instance will be launched
+
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet ID where the instance will be launched
+
+  AllowSSHFrom:
+    Type: String
+    Default: 0.0.0.0/0
+    Description: CIDR block to allow SSH access from
+    AllowedPattern: '^([0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}$'
+
+Mappings:
+  RegionMap:
+    us-east-1:
+      AMI: ami-0c02fb55956c7d316  # Amazon Linux 2023
+    us-west-2:
+      AMI: ami-008fe2fc65df48dac  # Amazon Linux 2023
+    eu-west-1:
+      AMI: ami-01dd271720c1ba44f  # Amazon Linux 2023
+    ap-southeast-1:
+      AMI: ami-047126e50991d067b  # Amazon Linux 2023
+
+Resources:
+  # Security Group
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for monitoring EC2 instance
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowSSHFrom
+          Description: SSH access
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+          Description: HTTP access
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+          Description: HTTPS access
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+          Description: All outbound traffic
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-SecurityGroup'
+
+  # IAM Role (inline for this template)
+  EC2MonitoringRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      Policies:
+        - PolicyName: AdditionalCloudWatchPermissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:DescribeLogStreams
+                  - logs:DescribeLogGroups
+                  - cloudwatch:PutMetricData
+                  - ec2:DescribeVolumes
+                  - ec2:DescribeTags
+                  - ec2:DescribeInstances
+                Resource: '*'
+
+  # Instance Profile
+  EC2MonitoringInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2MonitoringRole
+
+  # EC2 Instance
+  MonitoringInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', AMI]
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyPairName
+      IamInstanceProfile: !Ref EC2MonitoringInstanceProfile
+      SecurityGroupIds:
+        - !Ref InstanceSecurityGroup
+      SubnetId: !Ref SubnetId
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          
+          # Update system packages
+          yum update -y
+          
+          # Install CloudWatch agent
+          wget https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
+          rpm -U ./amazon-cloudwatch-agent.rpm
+          
+          # Install SSM agent (Amazon Linux 2023 has it pre-installed, but let's ensure it's running)
+          if ! systemctl is-active --quiet amazon-ssm-agent; then
+              yum install -y amazon-ssm-agent
+          fi
+          
+          # Start and enable SSM agent
+          systemctl start amazon-ssm-agent
+          systemctl enable amazon-ssm-agent
+          
+          # Create CloudWatch agent configuration file
+          cat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json << 'EOF'
+          {
+              "agent": {
+                  "metrics_collection_interval": 60,
+                  "run_as_user": "cwagent"
+              },
+              "metrics": {
+                  "namespace": "CWAgent",
+                  "metrics_collected": {
+                      "cpu": {
+                          "measurement": [
+                              "cpu_usage_idle",
+                              "cpu_usage_iowait",
+                              "cpu_usage_user",
+                              "cpu_usage_system"
+                          ],
+                          "metrics_collection_interval": 60,
+                          "totalcpu": false
+                      },
+                      "disk": {
+                          "measurement": [
+                              "used_percent"
+                          ],
+                          "metrics_collection_interval": 60,
+                          "resources": [
+                              "*"
+                          ]
+                      },
+                      "diskio": {
+                          "measurement": [
+                              "io_time",
+                              "read_bytes",
+                              "write_bytes",
+                              "reads",
+                              "writes"
+                          ],
+                          "metrics_collection_interval": 60,
+                          "resources": [
+                              "*"
+                          ]
+                      },
+                      "mem": {
+                          "measurement": [
+                              "mem_used_percent"
+                          ],
+                          "metrics_collection_interval": 60
+                      },
+                      "netstat": {
+                          "measurement": [
+                              "tcp_established",
+                              "tcp_time_wait"
+                          ],
+                          "metrics_collection_interval": 60
+                      },
+                      "swap": {
+                          "measurement": [
+                              "swap_used_percent"
+                          ],
+                          "metrics_collection_interval": 60
+                      }
+                  }
+              },
+              "logs": {
+                  "logs_collected": {
+                      "files": {
+                          "collect_list": [
+                              {
+                                  "file_path": "/var/log/messages",
+                                  "log_group_name": "/aws/ec2/${AWS::StackName}/var/log/messages",
+                                  "log_stream_name": "{instance_id}",
+                                  "timezone": "UTC"
+                              },
+                              {
+                                  "file_path": "/var/log/secure",
+                                  "log_group_name": "/aws/ec2/${AWS::StackName}/var/log/secure",
+                                  "log_stream_name": "{instance_id}",
+                                  "timezone": "UTC"
+                              }
+                          ]
+                      }
+                  }
+              }
+          }
+          EOF
+          
+          # Start and enable CloudWatch agent
+          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+              -a fetch-config \
+              -m ec2 \
+              -s \
+              -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+          
+          # Enable CloudWatch agent to start on boot
+          systemctl enable amazon-cloudwatch-agent
+          
+          # Install additional monitoring tools
+          yum install -y htop iotop
+          
+          # Signal CloudFormation that the instance is ready
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MonitoringInstance --region ${AWS::Region}
+          
+          # Log completion
+          echo "$(date): CloudWatch agent and SSM agent installation and configuration completed" | logger -t cloudwatch-ssm-setup
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-MonitoringInstance'
+        - Key: Environment
+          Value: Development
+        - Key: Purpose
+          Value: Monitoring and Management
+    CreationPolicy:
+      ResourceSignal:
+        Count: 1
+        Timeout: PT10M
+
+Outputs:
+  InstanceId:
+    Description: Instance ID of the created EC2 instance
+    Value: !Ref MonitoringInstance
+    Export:
+      Name: !Sub '${AWS::StackName}-InstanceId'
+
+  InstancePublicIP:
+    Description: Public IP address of the instance
+    Value: !GetAtt MonitoringInstance.PublicIp
+    Export:
+      Name: !Sub '${AWS::StackName}-PublicIP'
+
+  InstancePrivateIP:
+    Description: Private IP address of the instance
+    Value: !GetAtt MonitoringInstance.PrivateIp
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateIP'
+
+  SSMSessionCommand:
+    Description: Command to connect via SSM Session Manager
+    Value: !Sub 'aws ssm start-session --target ${MonitoringInstance}'
+
+  SecurityGroupId:
+    Description: Security Group ID
+    Value: !Ref InstanceSecurityGroup
+    Export:
+      Name: !Sub '${AWS::StackName}-SecurityGroupId'
