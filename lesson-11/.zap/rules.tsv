@@ -1,0 +1,38 @@
+# ZAP Rules Configuration
+# Format: ID	THRESHOLD	[IGNORE/WARN/FAIL]	[TRUE/FALSE]
+
+# SQL Injection
+40018	MEDIUM	FAIL	TRUE
+
+# Cross Site Scripting (Reflected)
+40012	MEDIUM	FAIL	TRUE
+
+# Cross Site Scripting (Stored)
+40014	MEDIUM	FAIL	TRUE
+
+# Command Injection
+90020	HIGH	FAIL	TRUE
+
+# Path Traversal
+6	MEDIUM	FAIL	TRUE
+
+# Remote File Inclusion
+7	HIGH	FAIL	TRUE
+
+# Server Side Include
+40009	MEDIUM	WARN	TRUE
+
+# Cross-Domain Misconfiguration
+10098	MEDIUM	WARN	TRUE
+
+# X-Frame-Options Header Not Set
+10020	MEDIUM	WARN	TRUE
+
+# X-Content-Type-Options Header Missing
+10021	LOW	WARN	TRUE
+
+# Information Disclosure - Suspicious Comments
+10027	LOW	WARN	TRUE
+
+# Timestamp Disclosure - Unix
+10096	LOW	IGNORE	FALSE
