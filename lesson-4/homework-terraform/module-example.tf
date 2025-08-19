@@ -1,6 +1,8 @@
 # Příklad použití modulu EC2 instance
 # Pro použití odkomentujte tento soubor a zakomentujte resource "aws_instance" v main.tf
-
+locals {
+  owner = "student"
+}
 
 module "ec2_instance" {
   source = "./modules/ec2-instance"
@@ -24,7 +26,7 @@ module "ec2_instance" {
   EOF
 
   additional_tags = {
-    Owner  = "student"
+    Owner  = "${local.owner}"
     Module = "true"
   }
 }
