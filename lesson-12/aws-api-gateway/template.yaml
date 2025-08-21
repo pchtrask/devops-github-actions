@@ -1,0 +1,366 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'API Gateway REST API with Lambda backend and API Key authentication'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+    Description: Environment name
+
+  ApiKeyName:
+    Type: String
+    Default: DevOpsAPIKey
+    Description: Name for the API Key
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.12
+    Environment:
+      Variables:
+        ENVIRONMENT: !Ref Environment
+        LOG_LEVEL: INFO
+
+Resources:
+  # IAM Role for Lambda functions (defined first)
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub 'devops-api-lambda-role-${Environment}'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Scan
+                  - dynamodb:Query
+                  - dynamodb:DescribeTable
+                Resource:
+                  - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/devops-users-${Environment}'
+                  - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/devops-products-${Environment}'
+
+  # DynamoDB Tables (defined before Lambda functions)
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub 'devops-users-${Environment}'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Application
+          Value: DevOpsAPI
+
+  ProductsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub 'devops-products-${Environment}'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Application
+          Value: DevOpsAPI
+
+  # API Gateway REST API
+  DevOpsAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub 'devops-api-${Environment}'
+      StageName: !Ref Environment
+      Description: DevOps API Testing Demo
+      Auth:
+        ApiKeyRequired: true
+        # Remove UsagePlan from here to create it explicitly below
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+        MaxAge: "'600'"
+      GatewayResponses:
+        UNAUTHORIZED:
+          StatusCode: 401
+          ResponseTemplates:
+            "application/json": '{"message": "Unauthorized - API Key required"}'
+        ACCESS_DENIED:
+          StatusCode: 403
+          ResponseTemplates:
+            "application/json": '{"message": "Forbidden - Invalid API Key"}'
+        THROTTLED:
+          StatusCode: 429
+          ResponseTemplates:
+            "application/json": '{"message": "Too Many Requests - Rate limit exceeded"}'
+
+  # Lambda Functions
+  UsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 'devops-api-users-${Environment}'
+      CodeUri: src/users/
+      Handler: handler.lambda_handler
+      Description: Handle users API operations
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          USERS_TABLE: !Ref UsersTable
+          PRODUCTS_TABLE: !Ref ProductsTable
+          ENVIRONMENT: !Ref Environment
+          LOG_LEVEL: INFO
+      Events:
+        GetUsers:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /users
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+        GetUser:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /users/{id}
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+        CreateUser:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /users
+            Method: POST
+            Auth:
+              ApiKeyRequired: true
+        UpdateUser:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /users/{id}
+            Method: PUT
+            Auth:
+              ApiKeyRequired: true
+        DeleteUser:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /users/{id}
+            Method: DELETE
+            Auth:
+              ApiKeyRequired: true
+
+  ProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 'devops-api-products-${Environment}'
+      CodeUri: src/products/
+      Handler: handler.lambda_handler
+      Description: Handle products API operations
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          USERS_TABLE: !Ref UsersTable
+          PRODUCTS_TABLE: !Ref ProductsTable
+          ENVIRONMENT: !Ref Environment
+          LOG_LEVEL: INFO
+      Events:
+        GetProducts:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /products
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+        GetProduct:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /products/{id}
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+        CreateProduct:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /products
+            Method: POST
+            Auth:
+              ApiKeyRequired: true
+        UpdateProduct:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /products/{id}
+            Method: PUT
+            Auth:
+              ApiKeyRequired: true
+        DeleteProduct:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /products/{id}
+            Method: DELETE
+            Auth:
+              ApiKeyRequired: true
+
+  HealthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 'devops-api-health-${Environment}'
+      CodeUri: src/health/
+      Handler: handler.lambda_handler
+      Description: Health check endpoint
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          USERS_TABLE: !Ref UsersTable
+          PRODUCTS_TABLE: !Ref ProductsTable
+          ENVIRONMENT: !Ref Environment
+          LOG_LEVEL: INFO
+      Events:
+        HealthCheck:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DevOpsAPI
+            Path: /health
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+
+  # API Key (created after API deployment)
+  DevOpsAPIKey:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Name: !Sub '${ApiKeyName}-${Environment}'
+      Description: API Key for DevOps API Testing
+      Enabled: true
+
+  # Usage Plan (references the auto-created stage)
+  DevOpsUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    Properties:
+      UsagePlanName: !Sub 'devops-api-usage-plan-${Environment}'
+      Description: Usage plan for DevOps API
+      ApiStages:
+        - ApiId: !Ref DevOpsAPI
+          Stage: !Ref Environment
+      Quota:
+        Limit: 10000
+        Period: DAY
+      Throttle:
+        BurstLimit: 100
+        RateLimit: 50
+    DependsOn: DevOpsAPI
+
+  # Usage Plan Key (connects API Key to Usage Plan)
+  DevOpsUsagePlanKey:
+    Type: AWS::ApiGateway::UsagePlanKey
+    Properties:
+      KeyId: !Ref DevOpsAPIKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref DevOpsUsagePlan
+
+  # CloudWatch Log Groups
+  UsersLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/devops-api-users-${Environment}'
+      RetentionInDays: 14
+
+  ProductsLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/devops-api-products-${Environment}'
+      RetentionInDays: 14
+
+  HealthLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/devops-api-health-${Environment}'
+      RetentionInDays: 14
+
+Outputs:
+  ApiGatewayUrl:
+    Description: API Gateway endpoint URL
+    Value: !Sub 'https://${DevOpsAPI}.execute-api.${AWS::Region}.amazonaws.com/${Environment}'
+    Export:
+      Name: !Sub '${AWS::StackName}-ApiUrl'
+
+  ApiKeyId:
+    Description: API Key ID
+    Value: !Ref DevOpsAPIKey
+    Export:
+      Name: !Sub '${AWS::StackName}-ApiKeyId'
+
+  ApiKey:
+    Description: API Key Value (retrieve from AWS Console or CLI)
+    Value: !Sub 'aws apigateway get-api-key --api-key ${DevOpsAPIKey} --include-value --query value --output text'
+
+  UsersTableName:
+    Description: DynamoDB Users Table Name
+    Value: !Ref UsersTable
+    Export:
+      Name: !Sub '${AWS::StackName}-UsersTable'
+
+  ProductsTableName:
+    Description: DynamoDB Products Table Name
+    Value: !Ref ProductsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-ProductsTable'
+
+  # UsagePlanId:
+  #   Description: Usage Plan ID
+  #   Value: !Ref DevOpsUsagePlan
+  #   Export:
+  #     Name: !Sub '${AWS::StackName}-UsagePlanId'
+
+  TestCommands:
+    Description: Example test commands
+    Value: !Sub |
+      # Get API Key value:
+      aws apigateway get-api-key --api-key ${DevOpsAPIKey} --include-value --query value --output text
+
+      # Test endpoints:
+      curl -H "X-API-Key: YOUR_API_KEY" https://${DevOpsAPI}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/health
+      curl -H "X-API-Key: YOUR_API_KEY" https://${DevOpsAPI}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/users

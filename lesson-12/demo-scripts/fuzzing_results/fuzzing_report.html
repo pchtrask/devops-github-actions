@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Fuzzing Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background: #f0f0f0; padding: 20px; border-radius: 5px; }
+        .section { margin: 20px 0; }
+        .anomaly { background: #ffe6e6; padding: 10px; border-left: 4px solid #ff0000; }
+        .normal { background: #e6ffe6; padding: 10px; border-left: 4px solid #00ff00; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 API Fuzzing Report</h1>
+        <p>Datum: $(date)</p>
+        <p>Cíl: https://jsonplaceholder.typicode.com</p>
+    </div>
+    
+    <div class="section">
+        <h2>📋 Shrnutí testů</h2>
+        <ul>
+            <li>Directory Fuzzing: Testování existujících endpointů</li>
+            <li>Parameter Fuzzing: Testování URL parametrů</li>
+            <li>POST Data Fuzzing: Testování JSON payloadů</li>
+            <li>Header Fuzzing: Testování HTTP headerů</li>
+            <li>Python Fuzzing: Pokročilé testování s anomálie detekcí</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>🚨 Doporučení</h2>
+        <div class="anomaly">
+            <h3>Bezpečnostní opatření:</h3>
+            <ul>
+                <li>Implementujte input validaci pro všechny parametry</li>
+                <li>Používejte prepared statements proti SQL injection</li>
+                <li>Escapujte výstup proti XSS útokům</li>
+                <li>Implementujte rate limiting</li>
+                <li>Logujte podezřelé aktivity</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>📁 Soubory s výsledky</h2>
+        <ul>
+            <li>directory_fuzzing.json - Výsledky directory fuzzingu</li>
+            <li>parameter_fuzzing.json - Výsledky parameter fuzzingu</li>
+            <li>post_fuzzing.json - Výsledky POST data fuzzingu</li>
+            <li>header_fuzzing.json - Výsledky header fuzzingu</li>
+            <li>python_fuzzing_results.json - Výsledky Python fuzzingu</li>
+        </ul>
+    </div>
+</body>
+</html>

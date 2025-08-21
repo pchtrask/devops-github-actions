@@ -1,0 +1,58 @@
+version = 0.1
+
+[default]
+[default.build]
+[default.build.parameters]
+# Removed use_container to avoid ECR image issues
+
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "devops-api-gateway-dev"
+s3_prefix = "devops-api-gateway"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=dev ApiKeyName=DevOpsAPIKey-dev"
+image_repositories = []
+
+[dev]
+[dev.build]
+[dev.build.parameters]
+# Build without container for compatibility
+
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "devops-api-gateway-dev"
+s3_prefix = "devops-api-gateway"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=dev ApiKeyName=DevOpsAPIKey-dev"
+
+[staging]
+[staging.build]
+[staging.build.parameters]
+# Build without container for compatibility
+
+[staging.deploy]
+[staging.deploy.parameters]
+stack_name = "devops-api-gateway-staging"
+s3_prefix = "devops-api-gateway"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=staging ApiKeyName=DevOpsAPIKey-staging"
+
+[prod]
+[prod.build]
+[prod.build.parameters]
+# Build without container for compatibility
+
+[prod.deploy]
+[prod.deploy.parameters]
+stack_name = "devops-api-gateway-prod"
+s3_prefix = "devops-api-gateway"
+region = "eu-central-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=prod ApiKeyName=DevOpsAPIKey-prod"

