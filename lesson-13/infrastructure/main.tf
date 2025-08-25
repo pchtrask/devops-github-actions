@@ -11,14 +11,14 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   # Configure this with your own S3 bucket for state storage
-  #   bucket = "tfstate-739133790707-eu-central-1"
-  #   key    = "lesson-13/terraform.tfstate"
-  #   region = "eu-central-1"
-  #   encrypt = true
-  #   # dynamodb_table = "terraform-state-lock"
-  # }
+  backend "s3" {
+    # Configure this with your own S3 bucket for state storage
+    bucket = "tfstate-739133790707-eu-central-1"
+    key    = "lesson-13/terraform.tfstate"
+    region = "eu-central-1"
+    encrypt = true
+    # dynamodb_table = "terraform-state-lock"
+  }
 }
 
 provider "aws" {
@@ -63,19 +63,19 @@ resource "aws_kms_key" "main" {
         Resource = "*"
       },
       {
-         Sid   = "Allow Cloudwatch Logs to use the key"
-         Effect = "Allow"
-         Principal = {
-           Service = "logs.amazonaws.com"
-         }
-         Action = [
-           "kms:Decrypt",
-           "kms:GenerateDataKey",
-           "kms:Encrypt",
-           "kms:ReEncrypt*",
-           "kms:Describe*"
-         ]
-         Resource = "*"
+        Sid    = "Allow Cloudwatch Logs to use the key"
+        Effect = "Allow"
+        Principal = {
+          Service = "logs.amazonaws.com"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:GenerateDataKey",
+          "kms:Encrypt",
+          "kms:ReEncrypt*",
+          "kms:Describe*"
+        ]
+        Resource = "*"
       },
 
       {
@@ -242,12 +242,12 @@ data "aws_ami" "amazon_linux" {
 # NAT instance
 resource "aws_instance" "nat" {
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type              = "t3.micro"
-  key_name                   = var.key_pair_name
-  vpc_security_group_ids     = [aws_security_group.nat.id]
-  subnet_id                  = aws_subnet.public[0].id
+  instance_type               = "t3.micro"
+  key_name                    = var.key_pair_name
+  vpc_security_group_ids      = [aws_security_group.nat.id]
+  subnet_id                   = aws_subnet.public[0].id
   associate_public_ip_address = true
-  source_dest_check          = false
+  source_dest_check           = false
 
   user_data = <<-EOF
     #!/bin/bash
@@ -486,6 +486,59 @@ resource "aws_s3_bucket_public_access_block" "app_data" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+# S3 bucket policy enforcing TLS encryption in transit and KMS encryption at rest
+resource "aws_s3_bucket_policy" "app_data_security_policy" {
+  bucket = aws_s3_bucket.app_data.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Id      = "EnforceSSLAndKMSEncryption"
+    Statement = [
+      {
+        Sid       = "DenyInsecureConnections"
+        Effect    = "Deny"
+        Principal = "*"
+        Action    = "s3:*"
+        Resource = [
+          aws_s3_bucket.app_data.arn,
+          "${aws_s3_bucket.app_data.arn}/*"
+        ]
+        Condition = {
+          Bool = {
+            "aws:SecureTransport" = "false"
+          }
+        }
+      },
+      {
+        Sid       = "DenyUnencryptedObjectUploads"
+        Effect    = "Deny"
+        Principal = "*"
+        Action    = "s3:PutObject"
+        Resource  = "${aws_s3_bucket.app_data.arn}/*"
+        Condition = {
+          StringNotEquals = {
+            "s3:x-amz-server-side-encryption" = "aws:kms"
+          }
+        }
+      },
+      {
+        Sid       = "DenyWrongKMSKey"
+        Effect    = "Deny"
+        Principal = "*"
+        Action    = "s3:PutObject"
+        Resource  = "${aws_s3_bucket.app_data.arn}/*"
+        Condition = {
+          StringNotEquals = {
+            "s3:x-amz-server-side-encryption-aws-kms-key-id" = aws_kms_key.main.arn
+          }
+        }
+      }
+    ]
+  })
+
+  depends_on = [aws_s3_bucket_public_access_block.app_data]
 }
 
 # Lambda function for database access

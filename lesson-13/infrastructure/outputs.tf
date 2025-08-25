@@ -85,6 +85,12 @@ output "s3_bucket_arn" {
   value       = aws_s3_bucket.app_data.arn
 }
 
+output "s3_bucket_encryption_key" {
+  description = "KMS key used for S3 bucket encryption"
+  value       = aws_kms_key.main.arn
+  sensitive   = true
+}
+
 output "lambda_function_name" {
   description = "Name of the Lambda function"
   value       = aws_lambda_function.db_function.function_name

@@ -4,11 +4,11 @@ resource "aws_lambda_function" "secret_rotation" {
 
   filename         = data.archive_file.secret_rotation_zip[0].output_path
   source_code_hash = data.archive_file.secret_rotation_zip[0].output_base64sha256
-  function_name = "devops-lesson-13-secret-rotation"
-  role          = aws_iam_role.secret_rotation_role[0].arn
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.11"
-  timeout       = 30
+  function_name    = "devops-lesson-13-secret-rotation"
+  role             = aws_iam_role.secret_rotation_role[0].arn
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.11"
+  timeout          = 30
 
   vpc_config {
     subnet_ids         = aws_subnet.private[*].id
