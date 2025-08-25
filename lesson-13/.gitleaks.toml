@@ -1,0 +1,122 @@
+# GitLeaks configuration for DevOps Lesson 13
+title = "DevOps Lesson 13 - Secure Database Project"
+
+[extend]
+# Extend default rules
+useDefault = true
+
+[[rules]]
+id = "aws-access-key-id"
+description = "AWS Access Key ID"
+regex = '''AKIA[0-9A-Z]{16}'''
+tags = ["key", "AWS"]
+
+[[rules]]
+id = "aws-secret-access-key"
+description = "AWS Secret Access Key"
+regex = '''[0-9a-zA-Z/+]{40}'''
+tags = ["key", "AWS"]
+
+[[rules]]
+id = "aws-session-token"
+description = "AWS Session Token"
+regex = '''AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT\+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1BN1bUlrmtVgjHtMStJj5cKX0Rw=='''
+tags = ["key", "AWS"]
+
+[[rules]]
+id = "database-password"
+description = "Database Password"
+regex = '''(?i)(password|passwd|pwd)\s*[:=]\s*['""]?[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}['""]?'''
+tags = ["password", "database"]
+
+[[rules]]
+id = "database-connection-string"
+description = "Database Connection String"
+regex = '''(?i)(postgres|mysql|mongodb)://[a-zA-Z0-9._-]+:[a-zA-Z0-9._!@#$%^&*()-]+@[a-zA-Z0-9._-]+:[0-9]+/[a-zA-Z0-9._-]+'''
+tags = ["connection", "database"]
+
+[[rules]]
+id = "private-key"
+description = "Private Key"
+regex = '''-----BEGIN [A-Z]+ PRIVATE KEY-----'''
+tags = ["key", "private"]
+
+[[rules]]
+id = "api-key"
+description = "Generic API Key"
+regex = '''(?i)(api[_-]?key|apikey)\s*[:=]\s*['""]?[a-zA-Z0-9]{20,}['""]?'''
+tags = ["key", "api"]
+
+[[rules]]
+id = "jwt-token"
+description = "JWT Token"
+regex = '''eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*'''
+tags = ["token", "jwt"]
+
+[[rules]]
+id = "terraform-aws-access-key"
+description = "Terraform AWS Access Key"
+regex = '''(?i)access_key\s*=\s*['""]?AKIA[0-9A-Z]{16}['""]?'''
+tags = ["terraform", "aws", "key"]
+
+[[rules]]
+id = "terraform-aws-secret-key"
+description = "Terraform AWS Secret Key"
+regex = '''(?i)secret_key\s*=\s*['""]?[0-9a-zA-Z/+]{40}['""]?'''
+tags = ["terraform", "aws", "key"]
+
+# Allowlist for false positives
+[[rules.allowlist]]
+description = "Ignore test files and examples"
+paths = [
+    '''.*test.*''',
+    '''.*example.*''',
+    '''.*mock.*''',
+    '''.*dummy.*'''
+]
+
+[[rules.allowlist]]
+description = "Ignore placeholder values"
+regexes = [
+    '''AKIAIOSFODNN7EXAMPLE''',
+    '''wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY''',
+    '''your-access-key-here''',
+    '''your-secret-key-here''',
+    '''<.*>''',
+    '''\$\{.*\}''',
+    '''example\.com''',
+    '''localhost''',
+    '''127\.0\.0\.1'''
+]
+
+# Global allowlist
+[allowlist]
+description = "Global allowlist"
+files = [
+    '''.gitleaks.toml''',
+    '''README.md''',
+    '''.*\.md$''',
+    '''.*\.txt$''',
+    '''.*\.yml$''',
+    '''.*\.yaml$'''
+]
+
+paths = [
+    '''.*test.*''',
+    '''.*spec.*''',
+    '''.*mock.*''',
+    '''node_modules/.*''',
+    '''.git/.*''',
+    '''.terraform/.*'''
+]
+
+regexes = [
+    '''(?i)example''',
+    '''(?i)test''',
+    '''(?i)mock''',
+    '''(?i)dummy''',
+    '''(?i)placeholder''',
+    '''(?i)sample''',
+    '''AKIA[0-9A-Z]{16}.*EXAMPLE''',
+    '''your-.*-here'''
+]

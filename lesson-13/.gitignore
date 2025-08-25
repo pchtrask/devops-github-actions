@@ -1,0 +1,47 @@
+# Secrets and sensitive files
+*.pem
+*.key
+*.env
+.env*
+secrets/
+terraform.tfvars
+terraform.tfstate*
+.terraform/
+
+# AWS
+.aws/
+aws-exports.js
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
