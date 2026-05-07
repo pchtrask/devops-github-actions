@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  database_url: "mysql://mysql-service:3306/wordpress"
+  debug_mode: "false"
+  max_connections: "100"
