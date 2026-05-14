@@ -11,7 +11,7 @@ resource "aws_iam_role" "ecs_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ecs.amazonaws.com"
+          Service = ["ecs.amazonaws.com", "ecs-tasks.amazonaws.com"]
         }
       },
     ]
@@ -26,7 +26,7 @@ resource "aws_iam_role" "ecs_role" {
 
 data "aws_iam_policy_document" "inline_policy" {
   statement {
-    actions   = ["ecr:*"]
+    actions   = ["ecr:*", "logs:*", "cloudwatch:*", "ecs:*"]
     resources = ["*"]
   }
 }

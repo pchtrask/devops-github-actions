@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_ecs_cluster" "lesson7" {
   name = "lesson7"
 }
@@ -9,10 +11,12 @@ resource "aws_ecs_task_definition" "lesson7" {
   cpu                      = "512"
   memory                   = "1024"
 
+  execution_role_arn = aws_iam_role.ecs_role.arn
+  task_role_arn      = aws_iam_role.ecs_role.arn
   container_definitions = jsonencode([
     {
-      name      = "web"
-      image     = "739133790707.dkr.ecr.eu-central-1.amazonaws.com/mynginx:latest"
+      name  = "web"
+      image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.eu-central-1.amazonaws.com/mynginx:latest"
       portMappings = [
         {
           containerPort = 80
@@ -27,7 +31,7 @@ resource "aws_ecs_task_definition" "lesson7" {
 
 resource "aws_ecs_service" "lesson7" {
   name            = "lesson7"
-  cluster        = aws_ecs_cluster.lesson7.id
+  cluster         = aws_ecs_cluster.lesson7.id
   task_definition = aws_ecs_task_definition.lesson7.arn
   desired_count   = 2
 
@@ -39,9 +43,9 @@ resource "aws_ecs_service" "lesson7" {
     assign_public_ip = false
   }
 
-    load_balancer {
-        target_group_arn = aws_lb_target_group.main.arn
-        container_name   = "web"
-        container_port   = 80
-    }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.main.arn
+    container_name   = "web"
+    container_port   = 80
+  }
 }
