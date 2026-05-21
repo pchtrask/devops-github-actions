@@ -133,7 +133,7 @@ jobs:
 
 
   "lesson8":
-    if: ${{ github.event.inputs.lesson == 'lesson8' }}
+#    if: ${{ github.event.inputs.lesson == 'lesson8' }}
 
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
