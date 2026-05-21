@@ -139,7 +139,7 @@ jobs:
     environment: dev
     steps:
     - name: Checkout code
-      # git checkout origin/main
+      # git checkout -b  origin/main
       uses: actions/checkout@v4
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v3
@@ -177,8 +177,7 @@ jobs:
       with:
         push: true
         context: lesson-8/docker/
-        tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:${{ git.tag }}
-
+        tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:latest
 
     - name: Terraform deploy
       working-directory: lesson-8/terraform/
