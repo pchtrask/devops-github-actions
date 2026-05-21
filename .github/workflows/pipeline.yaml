@@ -136,7 +136,7 @@ jobs:
 #    if: ${{ github.event.inputs.lesson == 'lesson8' }}
 
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: dev
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
