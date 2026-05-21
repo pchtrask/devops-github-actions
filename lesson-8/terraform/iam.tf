@@ -41,11 +41,11 @@ resource "aws_iam_policy" "ecs_policy" {
         Resource = "*"
       },
       {
-        Effect   = "Allow"
-        Action   = ["logs:Describe*", "logs:Get*",
-                    "logs:List*",
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents"]
+        Effect = "Allow"
+        Action = ["logs:Describe*", "logs:Get*",
+          "logs:List*",
+          "logs:CreateLogStream",
+        "logs:PutLogEvents"]
         Resource = "arn:aws:logs:eu-central-1:739133790707:log-group:/ecs/lesson8:*"
       }
     ]
