@@ -177,7 +177,7 @@ jobs:
       with:
         push: true
         context: lesson-8/docker/
-        tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:latest
+        tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/mynginx:${{ github.sha }}
 
     - name: Terraform deploy
       working-directory: lesson-8/terraform/
