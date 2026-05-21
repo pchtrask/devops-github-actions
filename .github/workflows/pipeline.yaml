@@ -23,7 +23,7 @@ on:
         lesson:
           description: 'Select the lesson to run'
           required: true
-          default: 'lesson2'
+          default: 'lesson8'
           type: choice
           options:
             - lesson2
