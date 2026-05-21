@@ -11,6 +11,15 @@ on:
   push:
   workflow_dispatch:
       inputs:
+        env: 
+          description: 'Select the environment to deploy to'
+          required: true
+          default: 'dev'
+          type: choice
+          options:
+            - dev
+            - staging
+            - prod
         lesson:
           description: 'Select the lesson to run'
           required: true
@@ -40,94 +49,94 @@ permissions:
 
 jobs:
 
-  "lesson2":
-    if: ${{ github.event.inputs.lesson == 'lesson2' }}
+  # "lesson2":
+  #   if: ${{ github.event.inputs.lesson == 'lesson2' }}
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.13
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.13
-    - name: Install dependencies
-      #if: ${{ env.LESSON == 'lesson2' }}
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Set up Python 3.13
+  #     uses: actions/setup-python@v3
+  #     with:
+  #       python-version: 3.13
+  #   - name: Install dependencies
+  #     #if: ${{ env.LESSON == 'lesson2' }}
 
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install flake8 pytest
+  #       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+  #   - name: Lint with flake8
+  #     run: |
+  #       # stop the build if there are Python syntax errors or undefined names
+  #       flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+  #       # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+  #       flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  #   - name: Test with pytest
+  #     run: |
+  #       pytest
 
-  "lesson4":
-    if: ${{ github.event.inputs.lesson == 'lesson4' }}
+  # "lesson4":
+  #   if: ${{ github.event.inputs.lesson == 'lesson4' }}
 
-    runs-on: ubuntu-latest
-    environment: dev
-    # run terraform in lesson-4/live-demo directory
-    # defaults:
-    #   run: cd lesson-4/live-demo
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   # run terraform in lesson-4/live-demo directory
+  #   # defaults:
+  #   #   run: cd lesson-4/live-demo
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4.1.0
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-central-1
+  #   - name: Configure AWS Credentials
+  #     uses: aws-actions/configure-aws-credentials@v4.1.0
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: eu-central-1
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v3
-      with: 
-        terraform_version: "1.11.1"
+  #   - name: Set up Terraform
+  #     uses: hashicorp/setup-terraform@v3
+  #     with: 
+  #       terraform_version: "1.11.1"
 
-    - name: Terraform plan and apply
-      working-directory: lesson-4/live-demo
-      env:
-        TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_VAR_aws_region: eu-central-1
-        TF_IN_AUTOMATION: true
-        TF_INPUT: false
-        TF_WORKSPACE: dev
-      run: |
-        terraform init
-        terraform plan -no-color
-        terraform apply -auto-approve -no-color
+  #   - name: Terraform plan and apply
+  #     working-directory: lesson-4/live-demo
+  #     env:
+  #       TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       TF_VAR_aws_region: eu-central-1
+  #       TF_IN_AUTOMATION: true
+  #       TF_INPUT: false
+  #       TF_WORKSPACE: dev
+  #     run: |
+  #       terraform init
+  #       terraform plan -no-color
+  #       terraform apply -auto-approve -no-color
         
-  "lesson5":
-    if: ${{ github.event.inputs.lesson == 'lesson5' }}
+  # "lesson5":
+  #   if: ${{ github.event.inputs.lesson == 'lesson5' }}
 
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: lesson-5
-        tags: demoapp:latest
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
+  #   - name: Set up Docker Buildx
+  #     uses: docker/setup-buildx-action@v2
+  #   - name: Build and push Docker image
+  #     uses: docker/build-push-action@v4
+  #     with:
+  #       context: lesson-5
+  #       tags: demoapp:latest
 
 
   "lesson8":
     if: ${{ github.event.inputs.lesson == 'lesson8' }}
 
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ github.event.inputs.environment }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -149,7 +158,7 @@ jobs:
         TF_IN_AUTOMATION: true
         TF_INPUT: false
 
-        TF_WORKSPACE: dev
+        TF_WORKSPACE:  ${{ github.event.inputs.environment }}
       run: |
         terraform init
         terraform plan -no-color -target=aws_ecr_repository.mynginx -out=tfplan
@@ -187,43 +196,43 @@ jobs:
         terraform plan -no-color -out=tfplan
         terraform apply -auto-approve -no-color tfplan
         
-  "lesson9":
-    if: ${{ github.event.inputs.lesson == 'lesson9' }}
+  # "lesson9":
+  #   if: ${{ github.event.inputs.lesson == 'lesson9' }}
 
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
       
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '11'
+  #   - name: Set up Java
+  #     uses: actions/setup-java@v4
+  #     with:
+  #       distribution: 'temurin'
+  #       java-version: '11'
         
-    - name: Download and Setup JMeter
-      run: |
-        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
-        tar -xzf apache-jmeter-5.6.3.tgz
-        sudo mv apache-jmeter-5.6.3 /opt/jmeter
-        sudo ln -s /opt/jmeter/bin/jmeter /usr/local/bin/jmeter
+  #   - name: Download and Setup JMeter
+  #     run: |
+  #       wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+  #       tar -xzf apache-jmeter-5.6.3.tgz
+  #       sudo mv apache-jmeter-5.6.3 /opt/jmeter
+  #       sudo ln -s /opt/jmeter/bin/jmeter /usr/local/bin/jmeter
         
-    - name: Run JMeter Performance Test
-      env:
-        TEST_URL: ${{ vars.TEST_URL || 'https://httpbin.org/get' }}
-      run: |
-        cd lesson-9
-        jmeter -n -t performance-test.jmx -l results.jtl -e -o reports/ -Jtest.url=$TEST_URL
+  #   - name: Run JMeter Performance Test
+  #     env:
+  #       TEST_URL: ${{ vars.TEST_URL || 'https://httpbin.org/get' }}
+  #     run: |
+  #       cd lesson-9
+  #       jmeter -n -t performance-test.jmx -l results.jtl -e -o reports/ -Jtest.url=$TEST_URL
         
-    - name: Upload JMeter Results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: jmeter-results
-        path: |
-          lesson-9/results.jtl
-          lesson-9/reports/
+  #   - name: Upload JMeter Results
+  #     uses: actions/upload-artifact@v4
+  #     if: always()
+  #     with:
+  #       name: jmeter-results
+  #       path: |
+  #         lesson-9/results.jtl
+  #         lesson-9/reports/
         
     # - name: Run Docker container test
     #   run: |
