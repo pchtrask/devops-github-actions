@@ -8,7 +8,7 @@ resource "aws_lb" "main" {
   subnets            = data.aws_subnets.albsubnets.ids
 
   tags = {
-    Name = "${var.project_name}-alb"
+    Name    = "${var.project_name}-alb"
     Purpose = "ukazka v lekci 8"
   }
 }
