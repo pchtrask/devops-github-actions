@@ -245,7 +245,7 @@ describe('API Functional Tests', () => {
         });
 
         test('should handle malformed JSON', async () => {
-            const response = await request(app)
+            await request(app)
                 .post('/api/users')
                 .set('Content-Type', 'application/json')
                 .send('{"invalid": json}')

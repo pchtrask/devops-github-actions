@@ -40,10 +40,10 @@ npm start
 ### Docker
 ```bash
 # Build image
-docker build -t devops-demo-api .
+docker build -t devops-demo-api:test .
 
 # Run container
-docker run -p 3000:3000 devops-demo-api
+docker run -p 3000:3000 devops-demo-api:test
 
 # Check health
 curl http://localhost:3000/health
@@ -136,10 +136,10 @@ npm run test:coverage
 
 The application includes comprehensive test coverage:
 
-- **Unit Tests**: 15+ test cases covering validation logic
-- **Integration Tests**: 20+ test cases covering data operations
-- **Functional Tests**: 25+ test cases covering all API endpoints
-- **E2E Tests**: 15+ test cases covering complete workflows
+- **Unit Tests**: 6 test cases covering validation logic
+- **Integration Tests**: 16 test cases covering data operations
+- **Functional Tests**: 20 test cases covering all API endpoints
+- **E2E Tests**: 5 test cases covering complete workflows
 
 Target coverage: **80%** for branches, functions, lines, and statements.
 
@@ -174,8 +174,12 @@ docker build -t devops-demo-api:test .
 # Run tests in container
 docker run --rm devops-demo-api:test npm test
 
-# Run with coverage
-docker run --rm -v $(pwd)/coverage:/app/coverage devops-demo-api:test npm run test:coverage
+# Run with coverage. Pre-create coverage/ so Docker doesn't create the
+# bind-mount target as root, and pass -u so the container writes the
+# report as your user (otherwise host-side `npm run test:coverage` would
+# later fail with EACCES on the root-owned files).
+mkdir -p coverage
+docker run --rm -u $(id -u):$(id -g) -v $(pwd)/coverage:/app/coverage devops-demo-api:test npm run test:coverage
 ```
 
 ## Performance Testing
