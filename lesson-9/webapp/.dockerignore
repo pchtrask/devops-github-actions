@@ -10,6 +10,3 @@ README.md
 .env.development.local
 .env.test.local
 .env.production.local
-tests
-*.test.js
-jest.config.js
