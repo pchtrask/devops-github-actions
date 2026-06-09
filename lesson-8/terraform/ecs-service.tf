@@ -18,8 +18,8 @@ resource "aws_ecs_task_definition" "lesson8" {
 
   container_definitions = jsonencode([
     {
-      name      = "web"
-      image     = "${var.aws_account_id}.dkr.ecr.eu-central-1.amazonaws.com/mynginx:latest"
+      name  = "web"
+      image = "${var.aws_account_id}.dkr.ecr.eu-central-1.amazonaws.com/mynginx:latest"
       portMappings = [
         {
           containerPort = 80
@@ -42,7 +42,7 @@ resource "aws_ecs_task_definition" "lesson8" {
 
 resource "aws_ecs_service" "lesson8" {
   name            = "lesson8"
-  cluster        = aws_ecs_cluster.lesson8.id
+  cluster         = aws_ecs_cluster.lesson8.id
   task_definition = aws_ecs_task_definition.lesson8.arn
   desired_count   = 1
 
@@ -54,9 +54,9 @@ resource "aws_ecs_service" "lesson8" {
     assign_public_ip = true
   }
 
-    load_balancer {
-        target_group_arn = aws_lb_target_group.main.arn
-        container_name   = "web"
-        container_port   = 80
-    }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.main.arn
+    container_name   = "web"
+    container_port   = 80
+  }
 }
